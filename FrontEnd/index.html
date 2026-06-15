@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APiadas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div>
+        <h1>APiadas</h1>
+        <p>Uma Minimal API de piadas com moderação e webhook.</p>
+    </div>
+
+    <nav class="nav">
+        <a href="#piadas">Piadas</a>
+        <a href="#enviar">Enviar piada</a>
+        <a href="#admin">Admin</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Piadas aprovadas pela firma</h2>
+            <p>
+                Envie sua piada, espere a aprovação e veja a mágica acontecer:
+                quando uma piada é aprovada, um webhook é disparado automaticamente.
+            </p>
+
+            <div class="hero-actions">
+                <button id="btnCarregarPiadas" class="btn primary">
+                    Carregar piadas
+                </button>
+
+                <button id="btnPiadaAleatoria" class="btn secondary">
+                    Piada aleatória
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-card" id="piadaAleatoriaBox">
+            <span class="tag">Piada aleatória</span>
+            <h3>Nenhuma piada sorteada ainda</h3>
+            <p>Clique em “Piada aleatória” para buscar uma piada aprovada.</p>
+        </div>
+    </section>
+
+    <section id="piadas" class="section">
+        <div class="section-header">
+            <h2>Piadas aprovadas</h2>
+            <p>Essas são as piadas que já passaram pela moderação.</p>
+        </div>
+
+        <div id="listaPiadas" class="cards"></div>
+    </section>
+
+    <section id="enviar" class="section">
+        <div class="section-header">
+            <h2>Enviar nova piada</h2>
+            <p>Sua piada será enviada como pendente até ser aprovada.</p>
+        </div>
+
+        <form id="formPiada" class="form">
+            <div class="form-group">
+                <label for="pergunta">Pergunta</label>
+                <input
+                        type="text"
+                        id="pergunta"
+                        name="pergunta"
+                        placeholder="Ex: Por que o Java foi ao psicólogo?"
+                        required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="resposta">Resposta</label>
+                <input
+                        type="text"
+                        id="resposta"
+                        name="resposta"
+                        placeholder="Ex: Porque tinha muitos problemas de classe."
+                        required
+                >
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="categoria">Categoria</label>
+                    <input
+                            type="text"
+                            id="categoria"
+                            name="categoria"
+                            placeholder="tecnologia"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="autor">Autor</label>
+                    <input
+                            type="text"
+                            id="autor"
+                            name="autor"
+                            placeholder="Seu nome"
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="btn primary">
+                Enviar piada
+            </button>
+        </form>
+
+        <div id="mensagemEnvio" class="message"></div>
+    </section>
+
+    <section id="admin" class="section admin-section">
+        <div class="section-header">
+            <h2>Painel admin</h2>
+            <p>Aqui você aprova ou rejeita piadas pendentes.</p>
+        </div>
+
+        <button id="btnCarregarPendentes" class="btn secondary">
+            Carregar pendentes
+        </button>
+
+        <div id="listaPendentes" class="cards admin-cards"></div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <p>APiadas • Minimal API com Java, Javalin 7 e Webhooks</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
