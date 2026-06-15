@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:7070";
+const API_BASE_URL = "https://apiadas-backend.onrender.com";;
 
 const listaPiadas = document.getElementById("listaPiadas");
 const listaPendentes = document.getElementById("listaPendentes");
