@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://apiadas-backend.onrender.com";;
+const API_BASE_URL = "https://apiadas-backend.onrender.com";
 
 const listaPiadas = document.getElementById("listaPiadas");
 const formPiada = document.getElementById("formPiada");
@@ -10,7 +10,6 @@ const btnPiadaAleatoria = document.getElementById("btnPiadaAleatoria");
 
 btnCarregarPiadas.addEventListener("click", carregarPiadasAprovadas);
 btnPiadaAleatoria.addEventListener("click", carregarPiadaAleatoria);
-btnCarregarPendentes.addEventListener("click", carregarPiadasPendentes);
 formPiada.addEventListener("submit", enviarPiada);
 
 window.addEventListener("load", () => {
@@ -35,7 +34,8 @@ async function carregarPiadasAprovadas() {
 
         listaPiadas.innerHTML = piadas.map(criarCardPiada).join("");
     } catch (error) {
-        listaPiadas.innerHTML = criarMensagemErro(error.message);
+        listaPiadas.innerHTML = criarMensagemErro("Não foi possível carregar as piadas.");
+        console.error(error);
     }
 }
 
@@ -60,11 +60,11 @@ async function carregarPiadaAleatoria() {
         }
 
         piadaAleatoriaBox.innerHTML = `
-            <span class="tag">${data.categoria}</span>
+            <span class="tag">${escaparHtml(data.categoria)}</span>
             <h3>${escaparHtml(data.pergunta)}</h3>
             <p>${escaparHtml(data.resposta)}</p>
             <div class="card-meta">
-                <span class="badge approved">${data.status}</span>
+                <span class="badge approved">${escaparHtml(data.status)}</span>
                 <span class="badge">Autor: ${escaparHtml(data.autor)}</span>
             </div>
         `;
@@ -72,8 +72,9 @@ async function carregarPiadaAleatoria() {
         piadaAleatoriaBox.innerHTML = `
             <span class="tag">Erro</span>
             <h3>Não foi possível buscar a piada</h3>
-            <p>${error.message}</p>
+            <p>Verifique se o backend está online.</p>
         `;
+        console.error(error);
     }
 }
 
@@ -110,14 +111,13 @@ async function enviarPiada(event) {
         }
 
         mensagemEnvio.className = "message success";
-        mensagemEnvio.textContent = "Piada enviada com sucesso! Ela está aguardando aprovação.";
+        mensagemEnvio.textContent = "Piada enviada com sucesso! Ela está aguardando aprovação no painel admin.";
 
         formPiada.reset();
-
-        carregarPiadasPendentes();
     } catch (error) {
         mensagemEnvio.className = "message error";
-        mensagemEnvio.textContent = error.message;
+        mensagemEnvio.textContent = "Erro ao enviar piada. Verifique se a API está online.";
+        console.error(error);
     }
 }
 
