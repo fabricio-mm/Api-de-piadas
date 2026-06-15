@@ -26,6 +26,8 @@ public class Main {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
 
     private static final Random rnd = new Random();
+    private static final String ADMIN_TOKEN =
+            System.getenv().getOrDefault("ADMIN_TOKEN", "admin123");
 
     public static void main(String[] args) {
         int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "7070"));
@@ -130,6 +132,10 @@ public class Main {
 
             config.routes.get("/api/admin/piadas/pendentes", ctx ->
             {
+                if(!adminAutenticado(ctx)){
+                    ctx.status(401).json(Map.of("erro", "Acesso negado"));
+                    return;
+                }
                 List<Piada> piadasPendentes = piadas.stream()
                         .filter(p -> p.status.equals("PENDENTE"))
                         .toList();
@@ -145,6 +151,11 @@ public class Main {
 
             config.routes.post("/api/admin/piadas/{id}/aprovar", ctx ->
             {
+                if(!adminAutenticado(ctx)){
+                    ctx.status(401).json(Map.of("erro", "Acesso negado"));
+                    return;
+                }
+
                 int id = Integer.parseInt(ctx.pathParam("id"));
                 Piada piada = buscarPiadaPorId(id);
 
@@ -165,6 +176,11 @@ public class Main {
 
             config.routes.post("/api/admin/piadas/{id}/rejeitar", ctx ->
             {
+                if(!adminAutenticado(ctx)){
+                    ctx.status(401).json(Map.of("erro", "Acesso negado"));
+                    return;
+                }
+
                 int id = Integer.parseInt(ctx.pathParam("id"));
                 Piada piada = buscarPiadaPorId(id);
 
@@ -214,6 +230,18 @@ public class Main {
                 .filter(p -> p.id == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    private static boolean adminAutenticado(io.javalin.http.Context ctx) {
+        String authorization = ctx.header("Authorization");
+
+        if (authorization == null || authorization.isBlank()) {
+            return false;
+        }
+
+        String token = authorization.replace("Bearer ", "").trim();
+
+        return ADMIN_TOKEN.equals(token);
     }
 
     private static void dispararWebhookPiadaAprovada(Piada piada) {

@@ -356,4 +356,8 @@ input:focus {
     .container {
         width: 92%;
     }
+
+    .hidden {
+        display: none;
+    }
 }

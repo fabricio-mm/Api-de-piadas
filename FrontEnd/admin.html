@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APiadas - Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div>
+        <h1>APiadas Admin</h1>
+        <p>Painel de moderação das piadas enviadas.</p>
+    </div>
+
+    <nav class="nav">
+        <a href="index.html">Página inicial</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section id="loginAdmin" class="section">
+        <div class="section-header">
+            <h2>Login admin</h2>
+            <p>Digite o token de administrador para acessar a moderação.</p>
+        </div>
+
+        <form id="formLoginAdmin" class="form">
+            <div class="form-group">
+                <label for="adminToken">Token admin</label>
+                <input
+                        type="password"
+                        id="adminToken"
+                        name="adminToken"
+                        placeholder="Digite o token admin"
+                        required
+                >
+            </div>
+
+            <button type="submit" class="btn primary">
+                Entrar
+            </button>
+        </form>
+
+        <div id="mensagemLogin" class="message"></div>
+    </section>
+
+    <section id="painelAdmin" class="section admin-section hidden">
+        <div class="section-header">
+            <h2>Piadas pendentes</h2>
+            <p>Aprove ou rejeite as piadas enviadas pelos usuários.</p>
+        </div>
+
+        <div class="admin-actions">
+            <button id="btnCarregarPendentes" class="btn secondary">
+                Carregar pendentes
+            </button>
+
+            <button id="btnSairAdmin" class="btn danger">
+                Sair
+            </button>
+        </div>
+
+        <div id="listaPendentes" class="cards admin-cards"></div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <p>APiadas • Área administrativa</p>
+</footer>
+
+<script src="admin.js"></script>
+</body>
+</html>
